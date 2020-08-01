@@ -4,12 +4,18 @@ import subprocess
 import getpass
 import hashlib
 
+from . import base58
+
 
 def derive_secret_key(master_password, domain, username, counter):
     salt = f"{domain}{username}{counter:x}".encode("utf-8")
     return hashlib.pbkdf2_hmac(
         "sha256", master_password, salt=salt, iterations=100_000, dklen=32
     )
+
+
+def format_password_hex(secret_key):
+    return base58.b58encode(secret_key[-12:]).decode("ascii") + "-"
 
 
 def format_password_lesspass(secret_key):
@@ -60,7 +66,7 @@ def main():
     secret_key = derive_secret_key(
         master_password, args.domain, args.user, args.counter
     )
-    password = format_password_lesspass(secret_key)
+    password = format_password_hex(secret_key)
 
     write_to_clipboard(password)
 
