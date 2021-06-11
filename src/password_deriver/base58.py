@@ -9,7 +9,7 @@ def b58encode(s):
         leading_zeros += 1
 
     x = int.from_bytes(s, byteorder="big")
-   
+
     result = []
     while x > 0:
         x, digit = divmod(x, 58)

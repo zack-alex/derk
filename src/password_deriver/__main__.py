@@ -75,7 +75,9 @@ def graphical_fingerprint(data):
 
 
 def password_hash(password, salt):
-    return hashlib.scrypt(password, salt=salt, n=2**15, r=8, p=1, maxmem=64 * 1024 ** 2)
+    return hashlib.scrypt(
+        password, salt=salt, n=2 ** 15, r=8, p=1, maxmem=64 * 1024 ** 2
+    )
 
 
 def main():

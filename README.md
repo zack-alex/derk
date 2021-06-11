@@ -6,3 +6,7 @@ The password encoding approach is different, though. The following procedure is 
 1. The last 12 bytes of the secret key are taken;
 2. They are encoded using Base58 algorithm;
 3. A single hyphen (-) is inserted at the end.
+
+Similar projects:
+- [**lesspass**](https://github.com/lesspass/lesspass)
+- [**spectre**](https://spectre.app)
