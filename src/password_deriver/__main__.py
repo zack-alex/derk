@@ -81,10 +81,10 @@ def password_hash(password, salt):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("domain")
-    parser.add_argument("--user", default="")
+    parser.add_argument("--user")
     parser.add_argument("--counter", type=int, default=1)
     args = parser.parse_args()
-
+    args.user = args.user or config.get_user()
     print("Domain:", args.domain)
     print("User:", args.user)
 

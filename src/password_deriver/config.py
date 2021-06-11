@@ -36,3 +36,9 @@ def get_or_init_salt():
         salt = init_salt()
         set_salt(salt)
         return salt
+
+
+def get_user():
+    with open(config_path()) as f:
+        config = json.load(f)
+    return config["user"]
