@@ -6,6 +6,7 @@ import hashlib
 import random
 import pathlib
 import json
+import sys
 
 from . import base58, config
 
@@ -55,9 +56,14 @@ def format_password_lesspass(secret_key):
     return "".join(password)
 
 
-def write_to_clipboard(data):
-    process = subprocess.Popen("pbcopy", stdin=subprocess.PIPE)
-    process.communicate(data.encode("ascii"))
+if sys.platform.startswith("linux"):
+    def write_to_clipboard(data):
+        process = subprocess.Popen("wl-copy", stdin=subprocess.PIPE)
+        process.communicate(data.encode("ascii"))
+elif sys.platform.startswith("darwin"):
+    def write_to_clipboard(data):
+        process = subprocess.Popen("pbcopy", stdin=subprocess.PIPE)
+        process.communicate(data.encode("ascii"))
 
 
 def graphical_fingerprint(data):
