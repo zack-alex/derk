@@ -20,7 +20,7 @@ def set_salt(salt):
     except FileNotFoundError:
         config = {}
     config["salt"] = salt
-    config_path().parent.mkdir(parents=True)
+    config_path().parent.mkdir(parents=True, exist_ok=True)
     with open(config_path(), "w") as f:
         json.dump(config, f)
 
