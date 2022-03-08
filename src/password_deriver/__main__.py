@@ -25,6 +25,10 @@ def format_password_hex(secret_key):
     return base58.b58encode(secret_key[-12:]).decode("ascii") + "-"
 
 
+def format_ethereum_private_key(secret_key):
+    return secret_key.hex()
+
+
 def format_password_lesspass(secret_key):
     main_alphabet = (
         string.ascii_lowercase
@@ -91,10 +95,12 @@ def main():
     parser.add_argument("domain")
     parser.add_argument("--user")
     parser.add_argument("--counter", type=int, default=1)
+    parser.add_argument("--type", choices=["password", "ethereum"], default="password")
     args = parser.parse_args()
     args.user = args.user or config.get_user()
     print("Domain:", args.domain)
     print("User:", args.user)
+    fn = {"password": format_password_hex, "ethereum": format_ethereum_private_key}[args.type]
 
     master_password = getpass.getpass("Enter the master passphrase: ").encode("utf-8")
 
@@ -105,7 +111,7 @@ def main():
     secret_key = derive_secret_key(
         master_password, args.domain, args.user, args.counter
     )
-    password = format_password_hex(secret_key)
+    password = fn(secret_key)
 
     write_to_clipboard(password)
     print("The password is copied to the clipboard")
