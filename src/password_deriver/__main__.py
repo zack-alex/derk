@@ -44,6 +44,16 @@ def password_hash(password, salt):
     )
 
 
+def get_master_password():
+    salt = config.get_or_init_salt().encode("ascii")
+    master_password = getpass.getpass("Enter the master passphrase: ").encode("utf-8")
+
+    print("Master passphrase fingerprint:")
+    print(graphical_fingerprint(password_hash(master_password, salt)))
+
+    return master_password
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("domain")
@@ -55,12 +65,7 @@ def main():
     print("Domain:", args.domain)
     print("User:", args.user)
     fn = {"password": algorithms.format_password_hex, "ethereum": algorithms.format_ethereum_private_key}[args.type]
-
-    master_password = getpass.getpass("Enter the master passphrase: ").encode("utf-8")
-
-    salt = config.get_or_init_salt().encode("ascii")
-    print("Master passphrase fingerprint:")
-    print(graphical_fingerprint(password_hash(master_password, salt)))
+    master_password = get_master_password()
 
     secret_key = algorithms.derive_secret_key(
         master_password, args.domain, args.user, args.counter
