@@ -18,10 +18,12 @@ if sys.platform.startswith("linux"):
     def write_to_clipboard(data):
         process = subprocess.Popen("wl-copy", stdin=subprocess.PIPE)
         process.communicate(data.encode("ascii"))
+        print("The password is copied to the clipboard")
 elif sys.platform.startswith("darwin"):
     def write_to_clipboard(data):
         process = subprocess.Popen("pbcopy", stdin=subprocess.PIPE)
         process.communicate(data.encode("ascii"))
+        print("The password is copied to the clipboard")
 
 
 def password_hash(password, salt):
@@ -51,24 +53,19 @@ def get_master_password():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("domain")
-    parser.add_argument("--user")
-    parser.add_argument("--counter", type=int, default=1)
-    parser.add_argument("--type", choices=["password", "ethereum"], default="password")
+    parser.add_argument("specs")
+    parser.add_argument("--print", action="store_true")
     args = parser.parse_args()
-    args.user = args.user or config.get_user()
-    print("Domain:", args.domain)
-    print("User:", args.user)
-    fn = {"password": algorithms.format_password_hex, "ethereum": algorithms.format_ethereum_private_key}[args.type]
+    specs = json.loads(args.specs)
+    for spec in specs:
+        if "error" in spec:
+            exit(spec["error"])
+    action = print if args.print else write_to_clipboard
     master_password = get_master_password()
 
-    secret_key = algorithms.derive_secret_key(
-        master_password, args.domain, args.user, args.counter
-    )
-    password = fn(secret_key)
-
-    write_to_clipboard(password)
-    print("The password is copied to the clipboard")
+    for spec in specs:
+        password = algorithms.derive_and_format(master_password, spec)
+        action(password)
 
 
 if __name__ == "__main__":
