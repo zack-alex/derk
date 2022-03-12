@@ -24,20 +24,6 @@ elif sys.platform.startswith("darwin"):
         process.communicate(data.encode("ascii"))
 
 
-def graphical_fingerprint(data):
-    rng = random.Random(data)
-    image = [[0 for _ in range(8)] for _ in range(8)]
-    for _ in range(4):
-        x1, y1 = (rng.randrange(8) for _ in range(2))
-        x2, y2 = (rng.randrange(z, 8) for z in (x1, y1))
-        for x in range(x1, x2 + 1):
-            for y in range(y1, y2 + 1):
-                image[x][y] += 1
-    return "\n".join(
-        ["".join([FINGERPRINT_CHARS[value] for value in row]) for row in image]
-    )
-
-
 def password_hash(password, salt):
     return hashlib.scrypt(
         password, salt=salt, n=2 ** 15, r=8, p=1, maxmem=64 * 1024 ** 2
@@ -59,9 +45,6 @@ def get_master_password():
             r = getpass.getpass("Repeat the master passphrase: ").encode("utf-8")
         h = password_hash(master_password, salt)
         config.set_master_password_hash(h)
-
-    print("Master passphrase fingerprint:")
-    print(graphical_fingerprint(password_hash(master_password, salt)))
 
     return master_password
 
