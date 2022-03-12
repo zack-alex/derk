@@ -42,3 +42,25 @@ def get_user():
     with open(config_path()) as f:
         config = json.load(f)
     return config["user"]
+
+
+def get_master_password_hash():
+    with open(config_path()) as f:
+        config = json.load(f)
+    res = config.get("master_password_hash")
+    if res is None:
+        return None
+    return bytes.fromhex(res)
+
+
+def set_master_password_hash(h):
+    h = h.hex()
+    try:
+        with open(config_path()) as f:
+            config = json.load(f)
+    except FileNotFoundError:
+        config = {}
+    config["master_password_hash"] = h
+    config_path().parent.mkdir(parents=True, exist_ok=True)
+    with open(config_path(), "w") as f:
+        json.dump(config, f)

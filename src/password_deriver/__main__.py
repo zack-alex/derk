@@ -47,6 +47,18 @@ def password_hash(password, salt):
 def get_master_password():
     salt = config.get_or_init_salt().encode("ascii")
     master_password = getpass.getpass("Enter the master passphrase: ").encode("utf-8")
+    h = config.get_master_password_hash()
+    if h is not None:
+        while password_hash(master_password, salt) != h:
+            master_password = getpass.getpass("Wrong master passphrase, try again: ").encode("utf-8")
+    else:
+        r = getpass.getpass("Repeat the master passphrase: ").encode("utf-8")
+        while master_password != r:
+            print("Passphrases don't match. Let's do this again.")
+            master_password = getpass.getpass("Enter the master passphrase: ").encode("utf-8")
+            r = getpass.getpass("Repeat the master passphrase: ").encode("utf-8")
+        h = password_hash(master_password, salt)
+        config.set_master_password_hash(h)
 
     print("Master passphrase fingerprint:")
     print(graphical_fingerprint(password_hash(master_password, salt)))
