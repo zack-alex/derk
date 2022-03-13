@@ -18,12 +18,12 @@ if sys.platform.startswith("linux"):
     def write_to_clipboard(data):
         process = subprocess.Popen("wl-copy", stdin=subprocess.PIPE)
         process.communicate(data.encode("ascii"))
-        print("The password is copied to the clipboard")
+        print("The password is copied to the clipboard", file=sys.stderr)
 elif sys.platform.startswith("darwin"):
     def write_to_clipboard(data):
         process = subprocess.Popen("pbcopy", stdin=subprocess.PIPE)
         process.communicate(data.encode("ascii"))
-        print("The password is copied to the clipboard")
+        print("The password is copied to the clipboard", file=sys.stderr)
 
 
 def password_hash(password, salt):
@@ -42,8 +42,7 @@ def get_master_password():
     else:
         r = getpass.getpass("Repeat the master passphrase: ").encode("utf-8")
         while master_password != r:
-            print("Passphrases don't match. Let's do this again.")
-            master_password = getpass.getpass("Enter the master passphrase: ").encode("utf-8")
+            master_password = getpass.getpass("Passphrases don't match. Let's do this again.\nEnter the master passphrase: ").encode("utf-8")
             r = getpass.getpass("Repeat the master passphrase: ").encode("utf-8")
         h = password_hash(master_password, salt)
         config.set_master_password_hash(h)
@@ -53,10 +52,9 @@ def get_master_password():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("specs")
     parser.add_argument("--print", action="store_true")
     args = parser.parse_args()
-    specs = json.loads(args.specs)
+    specs = json.load(sys.stdin)
     for spec in specs:
         if "error" in spec:
             exit(spec["error"])
