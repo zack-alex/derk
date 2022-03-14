@@ -7,6 +7,7 @@ import random
 import pathlib
 import json
 import sys
+import os
 
 from . import config, algorithms
 
@@ -15,10 +16,16 @@ FINGERPRINT_CHARS = [" ", "░", "▒", "▓", "█"]
 
 
 if sys.platform.startswith("linux"):
-    def write_to_clipboard(data):
-        process = subprocess.Popen("wl-copy", stdin=subprocess.PIPE)
-        process.communicate(data.encode("ascii"))
-        print("The password is copied to the clipboard", file=sys.stderr)
+    if os.environ.get("XDG_SESSION_TYPE") == "wayland":
+        def write_to_clipboard(data):
+            process = subprocess.Popen("wl-copy", stdin=subprocess.PIPE)
+            process.communicate(data.encode("ascii"))
+            print("The password is copied to the clipboard", file=sys.stderr)
+    else:
+        def write_to_clipboard(data):
+            process = subprocess.Popen(["xclip", "-selection", "clipboard"], stdin=subprocess.PIPE)
+            process.communicate(data.encode("ascii"))
+            print("The password is copied to the clipboard", file=sys.stderr)        
 elif sys.platform.startswith("darwin"):
     def write_to_clipboard(data):
         process = subprocess.Popen("pbcopy", stdin=subprocess.PIPE)
