@@ -10,3 +10,4 @@ The password encoding approach is different, though. The following procedure is 
 Similar projects:
 - [**lesspass**](https://github.com/lesspass/lesspass)
 - [**spectre**](https://spectre.app)
+- [**BIP-32 spec**](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki)
