@@ -74,6 +74,8 @@ def derive_and_format(master_password, spec):
         return format_password_hex(secret_key)[:-1]
     elif method == "v1-shorter":
         return format_password_hex(secret_key)[:-3]
+    elif method == "v1-shorter-with-dash":
+        return format_password_hex(secret_key)[:-3] + "-"
     elif method == "ethereum":
         return format_ethereum_private_key(secret_key)
     elif method == "none":
