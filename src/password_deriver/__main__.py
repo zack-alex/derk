@@ -12,9 +12,6 @@ import os
 from . import config, algorithms
 
 
-FINGERPRINT_CHARS = [" ", "░", "▒", "▓", "█"]
-
-
 if sys.platform.startswith("linux"):
     if os.environ.get("XDG_SESSION_TYPE") == "wayland":
         def write_to_clipboard(data):
@@ -65,7 +62,7 @@ def main():
     for spec in specs:
         if "error" in spec:
             exit(spec["error"])
-    action = print if args.print else write_to_clipboard
+    action = sys.stdout.write if args.print else write_to_clipboard
     master_password = get_master_password()
 
     for spec in specs:
