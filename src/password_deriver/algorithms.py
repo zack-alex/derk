@@ -72,6 +72,8 @@ def derive_and_format(master_password, spec):
         return format_password_hex(secret_key)
     elif method == "v1-wo-tail":
         return format_password_hex(secret_key)[:-1]
+    elif method == "v1-with-bang":
+        return format_password_hex(secret_key)[:-1] + "!"
     elif method == "v1-shorter":
         return format_password_hex(secret_key)[:-3]
     elif method == "v1-shorter-with-dash":
