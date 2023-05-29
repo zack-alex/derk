@@ -61,14 +61,16 @@ def derive_and_format(master_password, spec):
     domain = spec["domain"]
     username = spec["username"]
     method = spec["method"]
-    if method == "v1-count2":
+    if method == "v1-count3":
+        counter = 3
+    elif method == "v1-count2":
         counter = 2
     else:
         counter = 1
     secret_key = derive_secret_key(master_password, domain, username, counter)
     if method == "v1":
         return format_password_hex(secret_key)
-    elif method == "v1-count2":
+    elif method == "v1-count2" or method == "v1-count3":
         return format_password_hex(secret_key)
     elif method == "v1-wo-tail":
         return format_password_hex(secret_key)[:-1]
