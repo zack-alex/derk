@@ -11,3 +11,6 @@ Similar projects:
 - [**lesspass**](https://github.com/lesspass/lesspass)
 - [**spectre**](https://spectre.app)
 - [**BIP-32 spec**](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki)
+
+**usage example:** in order to paste a password for *me@example.com* into the clibpoard,
+run `echo '[{"username": "me", "domain": "example.com", "method": "v1"}]' | password-deriver`
