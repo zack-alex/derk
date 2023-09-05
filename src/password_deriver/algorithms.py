@@ -63,7 +63,7 @@ def derive_and_format(master_password, spec):
     method = spec["method"]
     if method == "v1-count3":
         counter = 3
-    elif method == "v1-count2" or method == "v1-shorter-count2":
+    elif method == "v1-count2" or method == "v1-shorter-count2" or method == "v1-with-bang-count2":
         counter = 2
     else:
         counter = 1
@@ -74,7 +74,7 @@ def derive_and_format(master_password, spec):
         return format_password_hex(secret_key)
     elif method == "v1-wo-tail":
         return format_password_hex(secret_key)[:-1]
-    elif method == "v1-with-bang":
+    elif method == "v1-with-bang" or method == "v1-with-bang-count2":
         return format_password_hex(secret_key)[:-1] + "!"
     elif method == "v1-shorter" or method == "v1-shorter-count2":
         return format_password_hex(secret_key)[:-3]
