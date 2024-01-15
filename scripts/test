@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
+black src tests
 PYTHONPATH="./dev:$PYTHONPATH" coverage run --source=dev -m pytest || exit
 coverage report -m || exit
