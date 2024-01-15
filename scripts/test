@@ -5,6 +5,8 @@ die() {
     exit 1
 }
 
+./scripts/build || die "Build failure"
+
 black src tests
 
 PYTHONPATH="./dev:$PYTHONPATH" \

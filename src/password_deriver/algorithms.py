@@ -26,37 +26,6 @@ def format_ethereum_private_key(secret_key):
     return secret_key.hex()
 
 
-def format_password_lesspass(secret_key):
-    main_alphabet = (
-        string.ascii_lowercase
-        + string.ascii_uppercase
-        + string.digits
-        + string.punctuation
-    )
-    seed = int.from_bytes(secret_key, byteorder="big")
-
-    password = []
-    for _ in range(12):
-        seed, index = divmod(seed, len(main_alphabet))
-        password.append(main_alphabet[index])
-
-    extra_chars = []
-    for alphabet in [
-        string.ascii_lowercase,
-        string.ascii_uppercase,
-        string.digits,
-        string.punctuation,
-    ]:
-        seed, index = divmod(seed, len(alphabet))
-        extra_chars.append(alphabet[index])
-
-    for extra_char in extra_chars:
-        seed, index = divmod(seed, len(password))
-        password.insert(index, extra_char)
-
-    return "".join(password)
-
-
 def derive_and_format(master_password, spec):
     domain = spec["domain"]
     username = spec["username"]
