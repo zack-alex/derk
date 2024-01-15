@@ -17,7 +17,7 @@
       in
       {
         devShell = pkgs.mkShell {
-          buildInputs = [ pythonEnv pkgs.python3Packages.setuptools ];
+          buildInputs = [ pythonEnv pkgs.python3Packages.setuptools pkgs.python3Packages.pytest pkgs.python3Packages.pip ];
         };
 
         packages.default = pkgs.python3Packages.buildPythonPackage {

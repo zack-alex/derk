@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+PYTHONPATH="./dev:$PYTHONPATH" pytest
