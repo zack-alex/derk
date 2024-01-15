@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-PYTHONPATH="./dev:$PYTHONPATH" pytest
+PYTHONPATH="./dev:$PYTHONPATH" coverage run --source=dev -m pytest || exit
+coverage report -m || exit
