@@ -15,3 +15,15 @@ def test_algorithms():
         fixed_data.append([spec, res])
     with open("tests/password_deriver/data.json", "w") as f:
         json.dump(fixed_data, f, indent=2)
+
+
+def test_unknown_algorithm():
+    with pytest.raises(ValueError, match="Unknown method: test_unknown_method"):
+        derive_and_format(
+            b"test_master_password",
+            dict(
+                method="test_unknown_method",
+                domain="test_domain",
+                username="test_username",
+            ),
+        )
