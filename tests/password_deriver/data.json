@@ -4,5 +4,77 @@
       "method": "v1"
     },
     "MPkCZ52vY38WgZqC-"
+  ],
+  [
+    {
+      "method": "v1-count2"
+    },
+    "4wNEdvddmwRa8zq1Y-"
+  ],
+  [
+    {
+      "method": "v1-count3"
+    },
+    "4Qsgz7LRRFTeskQJk-"
+  ],
+  [
+    {
+      "method": "v1-shorter-count2"
+    },
+    "4wNEdvddmwRa8zq"
+  ],
+  [
+    {
+      "method": "v1-shorter-count3"
+    },
+    "4Qsgz7LRRFTeskQ"
+  ],
+  [
+    {
+      "method": "v1-with-bang-count2"
+    },
+    "4wNEdvddmwRa8zq1Y!"
+  ],
+  [
+    {
+      "method": "v1-wo-tail"
+    },
+    "MPkCZ52vY38WgZqC"
+  ],
+  [
+    {
+      "method": "v1-with-bang"
+    },
+    "MPkCZ52vY38WgZqC!"
+  ],
+  [
+    {
+      "method": "v1-with-bang-count2"
+    },
+    "4wNEdvddmwRa8zq1Y!"
+  ],
+  [
+    {
+      "method": "v1-shorter"
+    },
+    "MPkCZ52vY38WgZ"
+  ],
+  [
+    {
+      "method": "v1-shorter-with-dash"
+    },
+    "MPkCZ52vY38WgZ-"
+  ],
+  [
+    {
+      "method": "ethereum"
+    },
+    "c0986f8f4f79d17b22fbf9b2c8ee4fc4aba95e4812a19d65894bd64a6ecf3eb3"
+  ],
+  [
+    {
+      "method": "none"
+    },
+    ""
   ]
 ]

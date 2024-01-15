@@ -1,4 +1,22 @@
 #!/usr/bin/env sh
+
+die() {
+    echo "$1" >&2
+    exit 1
+}
+
 black src tests
-PYTHONPATH="./dev:$PYTHONPATH" coverage run --source=dev -m pytest || exit
-coverage report -m || exit
+
+PYTHONPATH="./dev:$PYTHONPATH" \
+  coverage run \
+  --source=dev \
+  -m pytest \
+  || die "Test failure"
+
+coverage report -m \
+  || die "Coverage failure"
+
+coverage report -m \
+  --fail-under 100 \
+  --include algorithms.py \
+  || die "Coverage failure"
