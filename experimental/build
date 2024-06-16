@@ -1,0 +1,7 @@
+set -e
+cd experimental
+GOOS=js GOARCH=wasm go build -o main.wasm main.go
+base64 -w 0 main.wasm >main.wasm.b64
+rm -rf wasm_exec.js
+cp "$(go env GOROOT)/misc/wasm/wasm_exec.js" .
+gomplate -f index.html.templ -o ../index.html
