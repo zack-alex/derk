@@ -20,12 +20,11 @@ import (
 
 type Config struct {
 	Salt               string `json:"salt"`
-	User               string `json:"user"`
 	MasterPasswordHash string `json:"master_password_hash"`
 }
 
 func configPath() string {
-	return filepath.Join(os.Getenv("HOME"), ".config", "password-deriver", "config.json")
+	return filepath.Join(os.Getenv("HOME"), ".local", "state", "derk", "config.json")
 }
 
 func getSalt() (string, error) {
@@ -65,14 +64,6 @@ func getOrInitSalt() (string, error) {
 		return "", err
 	}
 	return salt, nil
-}
-
-func getUser() (string, error) {
-	config, err := readConfig()
-	if err != nil {
-		return "", err
-	}
-	return config.User, nil
 }
 
 func getMasterPasswordHash() ([]byte, error) {
