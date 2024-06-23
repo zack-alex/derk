@@ -18,7 +18,7 @@
         devShell = pkgs.mkShell {
           buildInputs = [ pkgs.go pkgs.gomplate ];
         };
-        defaultPackage = pkgs.stdenv.mkDerivation {
+        packages.default = pkgs.stdenv.mkDerivation {
           name = "derk";
 
           src = ./.;
