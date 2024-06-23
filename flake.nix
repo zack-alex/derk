@@ -18,6 +18,24 @@
         devShell = pkgs.mkShell {
           buildInputs = [ pkgs.go pkgs.gomplate ];
         };
+        defaultPackage = pkgs.stdenv.mkDerivation {
+          name = "derk";
+
+          src = ./.;
+
+          buildInputs = [ pkgs.go ];
+
+          buildPhase = ''
+            export GOCACHE=$PWD/temp/cache
+            export GOMODCACHE=$PWD/temp/modcache
+            ./scripts/build
+          '';
+
+          installPhase = ''
+            mkdir -p $out/bin
+            mv ./dev/derk $out/bin/
+          '';
+        };
       }
     );
 }
