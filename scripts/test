@@ -5,20 +5,4 @@ die() {
     exit 1
 }
 
-./scripts/build || die "Build failure"
-
-black src tests
-
-PYTHONPATH="./dev:$PYTHONPATH" \
-  coverage run \
-  --source=dev \
-  -m pytest \
-  || die "Test failure"
-
-coverage report -m \
-  || die "Coverage failure"
-
-coverage report -m \
-  --fail-under 100 \
-  --include algorithms.py \
-  || die "Coverage failure"
+go test -cover -v || die "Test failure"

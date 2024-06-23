@@ -1,3 +1,2 @@
 #!/usr/bin/env sh
-rm -rf ./dev
-pip install . --target ./dev
+go build -o dev/ ./...
