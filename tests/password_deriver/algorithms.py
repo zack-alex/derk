@@ -15,6 +15,7 @@ def test_algorithms():
         fixed_data.append([spec, {"secret": res}])
     with open("test-data.json", "w") as f:
         json.dump(fixed_data, f, indent=2)
+        f.write("\n")
 
 
 def test_unknown_algorithm():
