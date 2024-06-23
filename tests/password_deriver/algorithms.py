@@ -12,7 +12,7 @@ def test_algorithms():
     for spec, _ in data:
         full_spec = dict(spec, domain="test_domain", username="test_username")
         res = derive_and_format(b"test_master_password", full_spec)
-        fixed_data.append([spec, res])
+        fixed_data.append([spec, {"secret": res}])
     with open("test-data.json", "w") as f:
         json.dump(fixed_data, f, indent=2)
 
