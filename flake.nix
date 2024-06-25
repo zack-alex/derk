@@ -33,7 +33,9 @@
             echo FOOO
             ls scripts
             ls scripts/build
+            cat scripts/build
             ./scripts/build
+            echo build ok
           '';
 
           installPhase = ''
