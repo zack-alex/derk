@@ -31,6 +31,8 @@
             pwd
             ls
             echo FOOO
+            ls scripts
+            ls scripts/build
             ./scripts/build
           '';
 
