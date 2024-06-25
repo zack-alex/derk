@@ -17,7 +17,7 @@ jobs:
         uses: cachix/install-nix-action@v20
 
       - name: Build with Nix
-        run: nix build
+        run: nix build --no-sandbox
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
