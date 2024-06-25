@@ -28,6 +28,9 @@
           buildPhase = ''
             export GOCACHE=$PWD/temp/cache
             export GOMODCACHE=$PWD/temp/modcache
+            pwd
+            ls
+            echo FOOO
             ./scripts/build
           '';
 
