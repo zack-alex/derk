@@ -34,7 +34,7 @@
             ls scripts
             ls scripts/build
             cat scripts/build
-            ./scripts/build
+            bash ./scripts/build
             echo build ok
           '';
 
