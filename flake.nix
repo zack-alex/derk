@@ -23,7 +23,7 @@
 
           src = ./.;
 
-          buildInputs = [ pkgs.go ];
+          buildInputs = [ pkgs.go pkgs.gomplate ];
 
           buildPhase = ''
             export GOCACHE=$PWD/temp/cache
@@ -32,8 +32,9 @@
           '';
 
           installPhase = ''
-            mkdir -p $out/bin
-            mv ./dev/derk $out/bin/
+            mkdir -p $out/bin $out/share
+            cp ./dev/derk $out/bin/
+            cp ./dev/index.html $out/share/
           '';
         };
       }
