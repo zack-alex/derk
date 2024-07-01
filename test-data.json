@@ -41,6 +41,14 @@
   ],
   [
     {
+      "method": "v1-shorter-count4"
+    },
+    {
+      "secret": "21NEvv7fE5Nob1S"
+    }
+  ],
+  [
+    {
       "method": "v1-with-bang-count2"
     },
     {

@@ -27,6 +27,8 @@ func DeriveAndFormat(masterPassword string, spec map[string]string) (string, err
 
 	counter := 1
 	switch method {
+	case "v1-shorter-count4":
+		counter = 4
 	case "v1-count3", "v1-shorter-count3":
 		counter = 3
 	case "v1-count2", "v1-shorter-count2", "v1-with-bang-count2":
@@ -42,7 +44,7 @@ func DeriveAndFormat(masterPassword string, spec map[string]string) (string, err
 		return formatBasic(secretKey), nil
 	case "v1-with-bang", "v1-with-bang-count2":
 		return formatBasic(secretKey) + "!", nil
-	case "v1-shorter", "v1-shorter-count2", "v1-shorter-count3":
+	case "v1-shorter", "v1-shorter-count2", "v1-shorter-count3", "v1-shorter-count4":
 		hx := formatBasic(secretKey)
 		return hx[:len(hx)-2], nil
 	case "v1-shorter-with-dash":
