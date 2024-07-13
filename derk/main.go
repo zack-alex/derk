@@ -159,6 +159,16 @@ func passwordHash(password string, salt []byte) ([]byte, error) {
 	return scrypt.Key([]byte(password), salt, 1<<15, 8, 1, 64)
 }
 
+func prompt(s string) {
+	tty, err := os.OpenFile("/dev/tty", os.O_WRONLY, 0)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		return
+	}
+	defer tty.Close()
+	fmt.Fprint(tty, s)
+}
+
 func readPassword() (string, error) {
 	tty, err := os.Open("/dev/tty")
 	if err != nil {
@@ -177,7 +187,7 @@ func getMasterPassword() (string, error) {
 		return "", err
 	}
 	salt := []byte(saltStr)
-	fmt.Print("Enter the master passphrase: ")
+	prompt("Enter the master passphrase: ")
 	masterPassword, err := readPassword()
 	if err != nil {
 		return "", err
@@ -193,7 +203,7 @@ func getMasterPassword() (string, error) {
 			os.Exit(1)
 		}
 		for subtle.ConstantTimeCompare(hashed, h) != 1 {
-			fmt.Print("Wrong master passphrase, try again: ")
+			prompt("Wrong master passphrase, try again: ")
 			masterPassword, err = readPassword()
 			if err != nil {
 				fmt.Fprintln(os.Stderr, "Error getting master passphrase:", err)
@@ -206,21 +216,21 @@ func getMasterPassword() (string, error) {
 			}
 		}
 	} else {
-		fmt.Print("Repeat the master passphrase: ")
+		prompt("Repeat the master passphrase: ")
 		repeatPassword, err := readPassword()
 		if err != nil {
 			fmt.Fprintln(os.Stderr, "Error getting repeated passphrase:", err)
 			os.Exit(1)
 		}
 		for masterPassword != repeatPassword {
-			fmt.Println("Passphrases don't match. Let's do this again.")
-			fmt.Print("Enter the master passphrase: ")
+			prompt("Passphrases don't match. Let's do this again.\n")
+			prompt("Enter the master passphrase: ")
 			masterPassword, err = readPassword()
 			if err != nil {
 				fmt.Fprintln(os.Stderr, "Error getting master passphrase:", err)
 				os.Exit(1)
 			}
-			fmt.Print("Repeat the master passphrase: ")
+			prompt("Repeat the master passphrase: ")
 			repeatPassword, err = readPassword()
 			if err != nil {
 				fmt.Fprintln(os.Stderr, "Error getting repeated passphrase:", err)
