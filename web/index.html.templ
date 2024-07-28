@@ -7,7 +7,10 @@
 </head>
 <body>
     <h1>derk</h1>
-    <input type="password" id="inputText" placeholder="Enter the master password">
+    <input type="text" id="inputDomain" placeholder="Enter the domain">
+    <input type="text" id="inputUsername" placeholder="Enter the username">
+    <input type="text" id="inputMethod" placeholder="Enter the method">
+    <input type="password" id="inputPassword" placeholder="Enter the master password">
     <a href="#" onclick="generateSecret(); return false;">Copy the secret to clipboard</a>
 
     <script>
@@ -22,8 +25,11 @@
         });
 
         async function generateSecret() {
-            const input = document.getElementById('inputText').value;
-            const secret = await window.deriveAndFormat(input);
+            const password = document.getElementById('inputPassword').value;
+            const domain = document.getElementById('inputDomain').value;
+            const username= document.getElementById('inputUsername').value;
+            const method = document.getElementById('inputMethod').value;
+            const secret = await window.deriveAndFormat(password, domain, username, method);
             navigator.clipboard.writeText(secret).then(() => {
                 console.log("Copied to clipboard:");
             }).catch(err => {

@@ -8,8 +8,12 @@ import (
 )
 
 func deriveAndFormat(this js.Value, p []js.Value) interface{} {
-	s := p[0].String()
-	result, err := derk.DeriveAndFormat(s, map[string]string{"method": "v1"})
+	masterPassword := p[0].String()
+	domain := p[1].String()
+	username := p[2].String()
+	method := p[3].String()
+
+	result, err := derk.DeriveAndFormat(masterPassword, map[string]string{"domain": domain, "username": username, "method": method})
 	if err != nil {
 		return err.Error()
 	}
