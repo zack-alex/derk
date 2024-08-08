@@ -18,24 +18,14 @@
         devShell = pkgs.mkShell {
           buildInputs = [ pkgs.go pkgs.gomplate ];
         };
-        packages.default = pkgs.stdenv.mkDerivation {
+        packages.default = pkgs.buildGoModule {
           name = "derk";
 
           src = ./.;
 
           buildInputs = [ pkgs.go pkgs.gomplate ];
 
-          buildPhase = ''
-            export GOCACHE=$PWD/temp/cache
-            export GOMODCACHE=$PWD/temp/modcache
-            bash ./scripts/build
-          '';
-
-          installPhase = ''
-            mkdir -p $out/bin $out/share
-            cp ./dev/derk $out/bin/
-            cp ./dev/index.html $out/share/
-          '';
+          vendorHash = "sha256-D7hqPo8HlEqEnF4TagLQXkUVJZq+2An1h3trPpJoD5Q=";
         };
       }
     );
