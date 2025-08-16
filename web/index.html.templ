@@ -14,9 +14,9 @@
     <a href="#" onclick="generateSecret(); return false;">Copy the secret to clipboard</a>
 
     <script>
-        {{ file.Read "dev/wasm_exec.js" }}
+        {{ file.Read "wasm_exec.js" }}
 
-        const wasmBase64 = `{{ file.Read "dev/web.base64" }}`;
+        const wasmBase64 = `{{ file.Read "derk.base64" }}`;
         const wasmBinary = Uint8Array.from(atob(wasmBase64), c => c.charCodeAt(0));
 
         const go = new Go();
