@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 set -e
-go build -o dev/ ./...
+mkdir -p dev/cli
+mkdir -p dev/web
 
-GOOS=js GOARCH=wasm go build -o dev/ ./web
-base64 -w 0 dev/web >dev/web.base64
-cp -f "$(go env GOROOT)/lib/wasm/wasm_exec.js" dev/
-gomplate -f web/index.html.templ -o dev/index.html
+go build -o dev/cli ./...
+
+GOOS=js GOARCH=wasm go build -o dev/web ./web
+base64 -w 0 dev/web/web >dev/web/derk.base64
+cp -f "$(go env GOROOT)/lib/wasm/wasm_exec.js" dev/web
+cp web/index.html.templ dev/web
+cd dev/web
+gomplate -f index.html.templ -o index.html
