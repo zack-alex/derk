@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/tekhnus/derk"
+	"github.com/zack-alex/derk"
 )
 
 type Config struct {

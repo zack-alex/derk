@@ -3,7 +3,7 @@
 package main
 
 import (
-	"github.com/tekhnus/derk"
+	"github.com/zack-alex/derk"
 	"syscall/js"
 )
 

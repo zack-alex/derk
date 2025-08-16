@@ -1,4 +1,4 @@
-module github.com/tekhnus/derk
+module github.com/zack-alex/derk
 
 go 1.21.5
 

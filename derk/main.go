@@ -13,7 +13,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/tekhnus/derk"
+	"github.com/zack-alex/derk"
 	"golang.org/x/crypto/scrypt"
 	"golang.org/x/term"
 )
