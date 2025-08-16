@@ -35,7 +35,7 @@
 
           nativeBuildInputs = [ pkgs.go pkgs.gomplate ];
 
-          vendorHash = "sha256-D7hqPo8HlEqEnF4TagLQXkUVJZq+2An1h3trPpJoD5Q=";
+          vendorHash = "sha256-6k7HaEK63HmC2YZA9dAL3zz4Gypc2ygPkWCigqNrfeg=";
 
           postInstall = ''
             base64 -w 0 $out/bin/derk >$out/bin/derk.base64
