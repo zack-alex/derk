@@ -33,10 +33,16 @@
 
           src = ./.;
 
-          nativeBuildInputs = [ pkgs.go pkgs.gomplate ];
+          nativeBuildInputs = [
+            pkgs.go
+            pkgs.gomplate
+          ];
 
           vendorHash = "sha256-6k7HaEK63HmC2YZA9dAL3zz4Gypc2ygPkWCigqNrfeg=";
 
+          preBuild = ''
+            export GOOS=js
+          '';
           postInstall = ''
             base64 -w 0 $out/bin/derk >$out/bin/derk.base64
             cp -f "$(go env GOROOT)/lib/wasm/wasm_exec.js" $out/bin/wasm_exec.js
