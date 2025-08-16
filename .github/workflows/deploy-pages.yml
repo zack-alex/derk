@@ -17,12 +17,12 @@ jobs:
         uses: cachix/install-nix-action@v31
 
       - name: Build with Nix
-        run: nix build --no-sandbox
+        run: 'nix build .#derk-web'
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./result/share
+          path: ./result/bin
 
   deploy:
     needs: build

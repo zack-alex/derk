@@ -13,6 +13,7 @@
           inherit system;
           overlays = [ ];
         };
+        pkgsWasi32 = pkgs.pkgsCross.wasi32;
       in
       {
         devShell = pkgs.mkShell {
@@ -20,6 +21,15 @@
         };
         packages.default = pkgs.buildGoModule {
           name = "derk";
+
+          src = ./.;
+
+          buildInputs = [ pkgs.go pkgs.gomplate ];
+
+          vendorHash = "sha256-D7hqPo8HlEqEnF4TagLQXkUVJZq+2An1h3trPpJoD5Q=";
+        };
+        packages.derk-web = pkgsWasi32.buildGoModule {
+          name = "derk-web";
 
           src = ./.;
 
