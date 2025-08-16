@@ -32,6 +32,9 @@
           name = "derk-web";
 
           src = ./.;
+          subPackages = [
+            "web"
+          ];
 
           nativeBuildInputs = [
             pkgs.go
@@ -44,7 +47,7 @@
             export GOOS=js
           '';
           postInstall = ''
-            base64 -w 0 $out/bin/derk >$out/bin/derk.base64
+            base64 -w 0 $out/bin/web >$out/bin/derk.base64
             cp -f "$(go env GOROOT)/lib/wasm/wasm_exec.js" $out/bin/wasm_exec.js
             cp ./web/index.html.templ $out/bin
             cd $out/bin
