@@ -12,23 +12,35 @@
     <input type="text" id="inputMethod" placeholder="Enter the method">
     <input type="password" id="inputPassword" placeholder="Enter the master password">
     <a href="#" onclick="generateSecret(); return false;">Copy the secret to clipboard</a>
+    <br>
+    <input type="file" id="inputConfig" placeholder="Select config file">
+    <pre id="outputConfig"></pre>
 
     <script>
+        // We embed Go's WASM runtime library.
         {{ file.Read "wasm_exec.js" }}
-
+        // We embed derk's wasm binary encoded with base64.
         const wasmBase64 = `{{ file.Read "derk.base64" }}`;
-        const wasmBinary = Uint8Array.from(atob(wasmBase64), c => c.charCodeAt(0));
 
+        const inputPassword = document.getElementById('inputPassword');
+        const inputDomain = document.getElementById('inputDomain');
+        const inputUsername= document.getElementById('inputUsername');
+        const inputMethod = document.getElementById('inputMethod');
+        const inputConfig = document.getElementById('inputConfig');
+        const outputConfig = document.getElementById('outputConfig');
+
+        // Start the WASM module.
+        const wasmBinary = Uint8Array.from(atob(wasmBase64), c => c.charCodeAt(0));
         const go = new Go();
         WebAssembly.instantiate(wasmBinary, go.importObject).then((result) => {
             go.run(result.instance);
         });
 
         async function generateSecret() {
-            const password = document.getElementById('inputPassword').value;
-            const domain = document.getElementById('inputDomain').value;
-            const username= document.getElementById('inputUsername').value;
-            const method = document.getElementById('inputMethod').value;
+            const password = inputPassword.value;
+            const domain = inputDomain.value;
+            const username= inputUsername.value;
+            const method = inputMethod.value;
             const secret = await window.deriveAndFormat(password, domain, username, method);
             navigator.clipboard.writeText(secret).then(() => {
                 console.log("Copied to clipboard:");
@@ -36,6 +48,39 @@
                 console.error("Error copying to clipboard:", err);
             });
         }
+
+        async function openDB() {
+            const db = await new Promise((res, rej) => {
+                const r = indexedDB.open("store", 1);
+                r.onupgradeneeded = () => r.result.createObjectStore("files");
+                r.onsuccess = () => res(r.result);
+                r.onerror = () => rej(r.error);
+            });
+            return db;
+        }
+
+        (async () => {
+            const db = await openDB();
+            async function showConfig() {
+                const req = db.transaction("files").objectStore("files").get("configFileContents");
+                req.onsuccess = () => {
+                    const text = req.result;
+                    outputConfig.textContent = text;
+                };
+            }
+            inputConfig.onchange = async () => {
+                const file = inputConfig.files[0];
+                if (!file) return;
+                const text = await file.text();
+                const tx = db.transaction("files", "readwrite");
+                tx.objectStore("files").put(text, "configFileContents");
+                tx.oncomplete = async () => {
+                    await showConfig();
+                    alert("Done!");
+                }
+            };
+            await showConfig();
+        })();
     </script>
 </body>
 </html>
