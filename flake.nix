@@ -26,7 +26,7 @@
 
           buildInputs = [ pkgs.go pkgs.gomplate ];
 
-          vendorHash = "sha256-D7hqPo8HlEqEnF4TagLQXkUVJZq+2An1h3trPpJoD5Q=";
+          vendorHash = "sha256-6k7HaEK63HmC2YZA9dAL3zz4Gypc2ygPkWCigqNrfeg=";
         };
         packages.derk-web = pkgsWasi32.buildGoModule {
           name = "derk-web";
