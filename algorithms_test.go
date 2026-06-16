@@ -85,3 +85,32 @@ func TestUnknownAlgorithm(t *testing.T) {
 		t.Fatalf("Bad error message")
 	}
 }
+
+var validate = flag.String("validate", "", "Path to config to validate")
+
+// This is a manual test; it runs only -validate flag with path to config is provided;
+// the config is parsed and each spec is derived.
+func TestValidate(t *testing.T) {
+	if *validate == "" {
+		t.Skip("Skipping validation")
+	}
+
+	validateContents, err := os.ReadFile(*validate)
+	if err != nil {
+		t.Fatalf("Failed to open validation file: %v", err)
+	}
+
+	var specs []map[string]string
+	err = json.Unmarshal(validateContents, &specs)
+	if err != nil {
+		t.Fatalf("Failed to parse validation file: %v", err)
+	}
+
+	for _, spec := range specs {
+		res, err := derk.DeriveAndFormat("test_master_password", spec)
+		if err != nil {
+			t.Fatalf("Failed to derive a spec: %v", err)
+		}
+		t.Logf("%s %s", spec, res)
+	}
+}
