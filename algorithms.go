@@ -53,8 +53,6 @@ func DeriveAndFormat(masterPassword string, spec map[string]string) (string, err
 		return hx[:len(hx)-2], nil
 	case "ethereum":
 		return formatHex(secretKey), nil
-	case "none":
-		return "", nil
 	default:
 		return "", fmt.Errorf("Unknown method: %s", method)
 	}

@@ -74,13 +74,5 @@
     {
       "secret": "c0986f8f4f79d17b22fbf9b2c8ee4fc4aba95e4812a19d65894bd64a6ecf3eb3"
     }
-  ],
-  [
-    {
-      "method": "none"
-    },
-    {
-      "secret": ""
-    }
   ]
 ]
