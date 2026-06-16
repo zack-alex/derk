@@ -39,35 +39,16 @@ func DeriveAndFormat(masterPassword string, spec map[string]string) (string, err
 		}
 	}
 
-	// Legacy counter specification.
-	switch method {
-	case "v1-shorter-count4":
-		if hasCounter {
-			return "", fmt.Errorf("Counter conflict")
-		}
-		counter = 4
-	case "v1-count3", "v1-shorter-count3":
-		if hasCounter {
-			return "", fmt.Errorf("Counter conflict")
-		}
-		counter = 3
-	case "v1-count2", "v1-shorter-count2", "v1-with-bang-count2":
-		if hasCounter {
-			return "", fmt.Errorf("Counter conflict")
-		}
-		counter = 2
-	}
-
 	secretKey := deriveSecretKey(masterPassword, domain, username, counter)
 
 	switch method {
-	case "v1", "v1-count2", "v1-count3":
+	case "v1":
 		return formatBasic(secretKey) + "-", nil
 	case "v1-wo-tail":
 		return formatBasic(secretKey), nil
-	case "v1-with-bang", "v1-with-bang-count2":
+	case "v1-with-bang":
 		return formatBasic(secretKey) + "!", nil
-	case "v1-shorter", "v1-shorter-count2", "v1-shorter-count3", "v1-shorter-count4":
+	case "v1-shorter":
 		hx := formatBasic(secretKey)
 		return hx[:len(hx)-2], nil
 	case "v1-shorter-with-dash":
