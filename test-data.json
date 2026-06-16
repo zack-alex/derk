@@ -69,14 +69,6 @@
   ],
   [
     {
-      "method": "v1-shorter-with-dash"
-    },
-    {
-      "secret": "MPkCZ52vY38WgZ-"
-    }
-  ],
-  [
-    {
       "method": "ethereum"
     },
     {
