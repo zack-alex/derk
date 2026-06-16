@@ -9,7 +9,25 @@
   ],
   [
     {
+      "method": "v1",
+      "counter": "1"
+    },
+    {
+      "secret": "MPkCZ52vY38WgZqC-"
+    }
+  ],
+  [
+    {
       "method": "v1-count2"
+    },
+    {
+      "secret": "4wNEdvddmwRa8zq1Y-"
+    }
+  ],
+  [
+    {
+      "method": "v1",
+      "counter": "2"
     },
     {
       "secret": "4wNEdvddmwRa8zq1Y-"
@@ -25,7 +43,25 @@
   ],
   [
     {
+      "method": "v1",
+      "counter": "3"
+    },
+    {
+      "secret": "4Qsgz7LRRFTeskQJk-"
+    }
+  ],
+  [
+    {
       "method": "v1-shorter-count2"
+    },
+    {
+      "secret": "4wNEdvddmwRa8zq"
+    }
+  ],
+  [
+    {
+      "method": "v1-shorter",
+      "counter": "2"
     },
     {
       "secret": "4wNEdvddmwRa8zq"

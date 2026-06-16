@@ -3,6 +3,7 @@ package derk_test
 import (
 	"encoding/json"
 	"flag"
+	"maps"
 	"os"
 	"strings"
 	"testing"
@@ -35,8 +36,7 @@ func TestAlgorithms(t *testing.T) {
 	for _, item := range data {
 		spec := item[0]
 		expect := item[1]["secret"]
-		fullspec := make(map[string]string)
-		fullspec["method"] = spec["method"]
+		fullspec := maps.Clone(spec)
 		fullspec["domain"] = "test_domain"
 		fullspec["username"] = "test_username"
 		res, err := derk.DeriveAndFormat("test_master_password", fullspec)
@@ -63,6 +63,8 @@ func TestAlgorithms(t *testing.T) {
 		}
 	}
 	if changed {
+		v, _ := json.Marshal(fixedData)
+		t.Logf("%s", v)
 		t.Fatalf("Something changed")
 	}
 }

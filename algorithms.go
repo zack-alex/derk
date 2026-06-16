@@ -4,6 +4,8 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"fmt"
+	"strconv"
+
 	"golang.org/x/crypto/pbkdf2"
 )
 
@@ -24,14 +26,35 @@ func DeriveAndFormat(masterPassword string, spec map[string]string) (string, err
 	domain := spec["domain"]
 	username := spec["username"]
 	method := spec["method"]
-
 	counter := 1
+	counterStr, hasCounter := spec["counter"]
+	if hasCounter {
+		var err error
+		counter, err = strconv.Atoi(counterStr)
+		if err != nil {
+			return "", err
+		}
+		if counter <= 0 {
+			return "", fmt.Errorf("Counter has to be positive")
+		}
+	}
+
+	// Legacy counter specification.
 	switch method {
 	case "v1-shorter-count4":
+		if hasCounter {
+			return "", fmt.Errorf("Counter conflict")
+		}
 		counter = 4
 	case "v1-count3", "v1-shorter-count3":
+		if hasCounter {
+			return "", fmt.Errorf("Counter conflict")
+		}
 		counter = 3
 	case "v1-count2", "v1-shorter-count2", "v1-with-bang-count2":
+		if hasCounter {
+			return "", fmt.Errorf("Counter conflict")
+		}
 		counter = 2
 	}
 

@@ -16,8 +16,12 @@
         pkgsWasi32 = pkgs.pkgsCross.wasi32;
       in
       {
-        devShell = pkgs.mkShell {
-          buildInputs = [ pkgs.go pkgs.gomplate ];
+        devShells.default = pkgs.mkShell {
+          buildInputs = [
+            pkgs.go
+            pkgs.gomplate
+            pkgs.gopls
+          ];
         };
         packages.default = pkgs.buildGoModule {
           name = "derk";
