@@ -3,17 +3,21 @@
 package main
 
 import (
+	"encoding/json"
 	"github.com/zack-alex/derk"
 	"syscall/js"
 )
 
-func deriveAndFormat(this js.Value, p []js.Value) interface{} {
+func deriveAndFormat(this js.Value, p []js.Value) any {
 	masterPassword := p[0].String()
-	domain := p[1].String()
-	username := p[2].String()
-	method := p[3].String()
+	jsonSpec := p[1].String()
+	var spec map[string]string
+	err := json.Unmarshal([]byte(jsonSpec), &spec)
+	if err != nil {
+		return err.Error()
+	}
 
-	result, err := derk.DeriveAndFormat(masterPassword, map[string]string{"domain": domain, "username": username, "method": method})
+	result, err := derk.DeriveAndFormat(masterPassword, spec)
 	if err != nil {
 		return err.Error()
 	}

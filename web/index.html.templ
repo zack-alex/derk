@@ -32,12 +32,9 @@
         var parsedConfig;
 
         async function generateSecretForConfig(confidx) {
-            const entry = parsedConfig[confidx];
+            const spec = parsedConfig[confidx];
             const password = inputPassword.value;
-            const domain = entry["domain"];
-            const username= entry["username"];
-            const method = entry["method"];
-            const secret = await window.deriveAndFormat(password, domain, username, method);
+            const secret = await window.deriveAndFormat(password, JSON.stringify(spec));
             navigator.clipboard.writeText(secret).then(() => {
                 console.log("Copied to clipboard:");
             }).catch(err => {
@@ -65,9 +62,7 @@
                     parsedConfig = json;
                     outputConfig.innerHTML = json.map((entry, idx) => `
                         <button type="button" onclick="generateSecretForConfig(${idx})" style="margin-right: 8px;">copy the password to clibboard</button>
-                        <span style="margin-right: 8px;">domain: ${entry["domain"]}</span>
-                        <span style="margin-right: 8px;">username: ${entry["username"]}</span>
-                        <span style="margin-right: 8px;">method: ${entry["method"]}</span>
+                        <span style="margin-right: 8px;">spec: ${JSON.stringify(entry)}</span>
                         <hr>
                     `).join("");
                 };
