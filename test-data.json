@@ -69,6 +69,14 @@
   ],
   [
     {
+      "method": "v1-short"
+    },
+    {
+      "secret": "MPkCZ52vY38W"
+    }
+  ],
+  [
+    {
       "method": "ethereum"
     },
     {

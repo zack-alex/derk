@@ -51,6 +51,12 @@ func DeriveAndFormat(masterPassword string, spec map[string]string) (string, err
 	case "v1-shorter":
 		hx := formatBasic(secretKey)
 		return hx[:len(hx)-2], nil
+	case "v1-short":
+		hx := formatBasic(secretKey)
+		if len(hx) < 12 {
+			return "", fmt.Errorf("Basic password is too short")
+		}
+		return hx[:12], nil
 	case "ethereum":
 		return formatHex(secretKey), nil
 	default:
